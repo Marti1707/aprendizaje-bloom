@@ -33,7 +33,10 @@ with open('ocean-temps.csv', mode='r') as archivo:
 suma_total = 0.0
 # cantidad de lecturas válidas que se procesan.
 cuenta_valida = 0
-
+# variable para calcular el maximo
+temp_max = None
+temp_min = None
+promedio = None
 # Crear lector que prepara el archivo.
 with open('ocean-temps.csv', mode='r') as archivo:
     lector_csv = csv.reader(archivo)
@@ -49,10 +52,19 @@ with open('ocean-temps.csv', mode='r') as archivo:
             # 2. Acumulamos la temperatura y sumamos 1 al contador.
             suma_total = suma_total + temperatura
             cuenta_valida = cuenta_valida + 1
-
-# 3. Calculamos el promedio FUERA del bucle (bien pegado a la izquierda)
-promedio = suma_total / cuenta_valida
+            # Calculamos el maximo
+            if temp_max is None or temperatura > temp_max:
+                temp_max = temperatura
+            # Calculamos el minimo
+            if temp_min is None or temperatura < temp_min:
+                temp_min = temperatura
+           
+           
+# 3. Calculamos el promedio fuera del bucle
+    promedio = suma_total / cuenta_valida
 
 print("Suma total de datos:", suma_total)
 print("Cantidad de datos válidos:", cuenta_valida)
 print("Promedio de temperatura:", promedio)
+print("Temperatura maxima:", temp_max)
+print("Temperatura minima:", temp_min)
