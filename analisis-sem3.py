@@ -29,8 +29,6 @@ def promedio(temperaturas):
         return 0.0
     return sum(temperaturas) / len(temperaturas)
 
-
-
 datos_cargados = leer_datos('ocean-temps-2sites.csv')
 
 # Se extraen solo las temperaturas para calcular el promedio general
@@ -57,6 +55,32 @@ promedio_monterey = promedio(temps_monterey)
 temps_san_pedro = temps_de_sitio(datos_cargados, 'san_pedro')
 promedio_san_pedro = promedio(temps_san_pedro)
 
-print("--- RESULTADOS POR SITIO ---")
+print("Resultados por sitio")
 print("Monterey -> Lecturas:", len(temps_monterey), "| Promedio:", promedio_monterey)
 print("San Pedro -> Lecturas:", len(temps_san_pedro), "| Promedio:", promedio_san_pedro)
+
+# Mision 3: Funcion de alerta y conteo de dias
+
+def es_alerta(temp, umbral):
+    
+    #Devuelve True si la temperatura supera el umbral, de lo contrario False.
+    
+    return temp > umbral
+
+# Defino un umbral fijo de 15.0 °C
+UMBRAL = 15.0
+
+# dias de alerta para Monterey
+alertas_monterey = 0
+for t in temps_monterey:
+    if es_alerta(t, UMBRAL):
+        alertas_monterey += 1
+
+# dias de alerta para San Pedro
+alertas_san_pedro = 0
+for t in temps_san_pedro:
+    if es_alerta(t, UMBRAL):
+        alertas_san_pedro += 1
+
+print(f"Días de alerta en Monterey: {alertas_monterey}")
+print(f"Días de alerta en San Pedro: {alertas_san_pedro}")
