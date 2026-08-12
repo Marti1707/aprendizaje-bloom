@@ -23,7 +23,7 @@ def leer_datos(nombre_archivo):
                     })
     return datos
 
-
+# se define la funcion promedio y recibe la variable temperaturas 
 def promedio(temperaturas):
     if len(temperaturas) == 0:
         return 0.0
@@ -84,3 +84,39 @@ for t in temps_san_pedro:
 
 print(f"Días de alerta en Monterey: {alertas_monterey}")
 print(f"Días de alerta en San Pedro: {alertas_san_pedro}")
+
+# Mision 4 agrupar datos por sitio en diccionario
+def agrupar_por_sitio(datos):
+    resumen = {}
+    
+    for registro in datos:
+        sitio = registro['site']
+        temp = registro['temperature']
+        
+        # Si el sitio aún no existe como clave en el diccionario, se crea con una lista vacía
+        if sitio not in resumen:
+            resumen[sitio] = []
+            
+        # se agrega la temperatura a la lista correspondiente
+        resumen[sitio].append(temp)
+        
+    return resumen
+
+# Agrupa todas las temperaturas por sitio
+datos_agrupados = agrupar_por_sitio(datos_cargados)
+
+# Ahora se puede iterar sobre el diccionario para calcular promedios y alertas de forma dinámica
+UMBRAL = 15.0
+
+print("RESUMEN AGRUPADO POR SITIO")
+for sitio, temperaturas in datos_agrupados.items():
+    prom = promedio(temperaturas)
+    
+    # se cuentan alertas usando nuestra función es_alerta
+    cant_alertas = sum(1 for t in temperaturas if es_alerta(t, UMBRAL))
+    
+    print(f"Sitio: {sitio.capitalize()}")
+    print(f"  - Lecturas: {len(temperaturas)}")
+    print(f"  - Promedio: {prom:.2f} °C")
+    print(f"  - Días de alerta: {cant_alertas}")
+    print("-" * 30)
