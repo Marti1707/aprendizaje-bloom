@@ -1,8 +1,7 @@
-## Mision 1
-#importa la libreria para procesar archivos csv
+#Import
 import csv
 
-# define la funcion principal para procesar el archivo
+##Funciones
 def leer_datos(nombre_archivo):
     datos = [] # crea una lista vacia (sera para guardar la informacion filtrada de cada fila)
     with open(nombre_archivo, mode='r') as archivo:
@@ -28,6 +27,7 @@ def leer_datos(nombre_archivo):
     #devuelve la lista estructurada con los datos procesados
     return datos
 
+
 # se define la funcion para obtener el promedio de las temperaturas
 def promedio(temperaturas):#comprueba si la lista de temperaturas esta vacia, asi se evitan errores al momento de calcular
     if len(temperaturas) == 0:
@@ -35,6 +35,41 @@ def promedio(temperaturas):#comprueba si la lista de temperaturas esta vacia, as
     #calcula media aritmetica SUM(suma), LEN(longitud) devuelve la cantidad total de elementos que contiene una coleccion o la cantidad de caracteres de un texto
     return sum(temperaturas) / len(temperaturas)
 
+
+def temps_de_sitio(datos, sitio):
+
+    temperaturas_filtradas = [] #crea una lista vacia (sera para las temperaturas filtradas)
+    # L53,L54,L55 recorre cada registro de temperaturas, si coincide con el sitio, agrega su temperatura a la lista
+    for registro in datos:
+        if registro['site'] == sitio:
+            temperaturas_filtradas.append(registro['temperature'])# .append sirve para agregar un nuevo elemento al final de la lista, en este caso a sitio se le suma la temperatura
+    # devuelve la lista con los datos de las temperaturas filtradas.
+    return temperaturas_filtradas
+
+
+def es_alerta(temp, umbral):#se define la logica de alerta
+    
+    #Devuelve TRUE si la temperatura supera el umbral, de lo contrario FALSE
+    return temp > umbral
+
+
+def agrupar_por_sitio(datos): #funcion para estructurar las temp agrupadas por sitio
+    resumen = {}#inicializa un dic vacio donde los nombres de los sitios seran la clave 
+
+    #se recorre cada registro extrayendo el sitio y la temperatura 
+    for registro in datos: 
+        sitio = registro['site']
+        temp = registro['temperature']
+        
+        # Si el sitio aún no existe como clave en el diccionario, se crea con una lista vacía
+        if sitio not in resumen:
+            resumen[sitio] = []
+            
+        # se agrega la temperatura a la lista correspondiente
+        resumen[sitio].append(temp)
+        
+    return resumen#devuelve el dic organizado
+## Mision 1
 datos_cargados = leer_datos('ocean-temps-2sites.csv') # ejecuta la lectura del archivo real
 
 # Se extraen solo las temperaturas para calcular el promedio general
@@ -46,15 +81,6 @@ print("Total de registros válidos:", len(datos_cargados))
 print("Promedio general de temperatura:", promedio_total)
 
 ## Mision 2: Función para filtrar temperaturas
-def temps_de_sitio(datos, sitio):
-
-    temperaturas_filtradas = [] #crea una lista vacia (sera para las temperaturas filtradas)
-    # L53,L54,L55 recorre cada registro de temperaturas, si coincide con el sitio, agrega su temperatura a la lista
-    for registro in datos:
-        if registro['site'] == sitio:
-            temperaturas_filtradas.append(registro['temperature'])# .append sirve para agregar un nuevo elemento al final de la lista, en este caso a sitio se le suma la temperatura
-    # devuelve la lista con los datos de las temperaturas filtradas.
-    return temperaturas_filtradas
 
 #se obtienen temperaturas y promedios. L60,L62,L63,L65,L66.
 datos_cargados = leer_datos('ocean-temps-2sites.csv')
@@ -72,11 +98,6 @@ print("Monterey -> Lecturas:", len(temps_monterey), "| Promedio:", promedio_mont
 print("San Pedro -> Lecturas:", len(temps_san_pedro), "| Promedio:", promedio_san_pedro)
 
 ## Mision 3: Funcion de alerta y conteo de dias
-
-def es_alerta(temp, umbral):#se define la logica de alerta
-    
-    #Devuelve TRUE si la temperatura supera el umbral, de lo contrario FALSE
-    return temp > umbral
 
 # Defino un umbral fijo de 15.0 °C
 UMBRAL = 15.0
@@ -97,22 +118,6 @@ print(f"Días de alerta en Monterey: {alertas_monterey}")
 print(f"Días de alerta en San Pedro: {alertas_san_pedro}")
 
 ## Mision 4 agrupar datos por sitio en diccionario
-def agrupar_por_sitio(datos): #funcion para estructurar las temp agrupadas por sitio
-    resumen = {}#inicializa un dic vacio donde los nombres de los sitios seran la clave 
-
-    #se recorre cada registro extrayendo el sitio y la temperatura 
-    for registro in datos: 
-        sitio = registro['site']
-        temp = registro['temperature']
-        
-        # Si el sitio aún no existe como clave en el diccionario, se crea con una lista vacía
-        if sitio not in resumen:
-            resumen[sitio] = []
-            
-        # se agrega la temperatura a la lista correspondiente
-        resumen[sitio].append(temp)
-        
-    return resumen#devuelve el dic organizado
 
 # Agrupa todas las temperaturas por sitio 
 datos_agrupados = agrupar_por_sitio(datos_cargados)
