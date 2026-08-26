@@ -69,6 +69,9 @@ def agrupar_por_sitio(datos): #funcion para estructurar las temp agrupadas por s
         resumen[sitio].append(temp)
         
     return resumen#devuelve el dic organizado
+
+
+
 ## Mision 1
 datos_cargados = leer_datos('ocean-temps-2sites.csv') # ejecuta la lectura del archivo real
 
