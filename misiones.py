@@ -3,7 +3,6 @@ import urllib.request
 
 
 def pedir_sst(lat, lon):
-    # Usamos un rango de fechas actual o general sin forzar fechas futuras lejanas
     url = f"https://marine-api.open-meteo.com/v1/marine?latitude={lat}&longitude={lon}&hourly=sea_surface_temperature&start_date=2026-08-01&end_date=2026-08-07&timezone=auto"
     try:
         respuesta = urllib.request.urlopen(url)
@@ -32,7 +31,7 @@ sitios = {
 for nombre, coords in sitios.items():
     temps_raw = pedir_sst(coords["lat"], coords["lon"])
 
-    # Filtramos estrictamente los valores nulos (None)
+    # filtrado de 544los valores nulos 
     temps = [t for t in temps_raw if t is not None]
 
     if not temps:
