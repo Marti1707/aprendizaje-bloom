@@ -24,11 +24,6 @@ La temperatura del agua es un factor clave en el surgimiento y desarrollo de las
 
 # Semana 3 - Funciones, filtros y diccionarios
 
-## Análisis y Días de Alerta por Sitio
-
-### ¿Qué hace el programa?
-El programa organiza el procesamiento de datos utilizando funciones modulares. Lee los registros del archivo, limpia los datos vacíos (`NN`), agrupa las temperaturas separándolas por sitio en monterey y san_pedro y utiliza una función de umbral para evaluar y contar cuántos días cada localidad supera la temperatura límite establecida, identificando posibles jornadas de riesgo.
-
 ## Análisis Modular y Días de Alerta por Sitio
 
 ### ¿Qué hace el programa actual?
@@ -60,14 +55,12 @@ porque el incremento de la temperatura acelera de forma directa la tasa metaból
 ### Aplicacion al dominio (Bloom Alert)
 En un sistema real como  **Bloom Alert**, la base de datos almacena las lecturas marinas y la logica del programa en python procesa los rsultados automaticamente.
 Por ejemplo una consulta SQL como:
-´´´sql
+ ```sql
 SELECT site, date, temp
 FROM readings
 WHERE temp > 15;
 
 # Semana 5 — APIs: datos del océano en vivo
-Este proyecto en Python consulta la API de Open-Meteo Marine para extraer datos de temperatura de la superficie del mar en coordenadas específicas y realizar un análisis de riesgo ambiental.
-
 ## Dominio del Proyecto
 El proyecto se enfoca en la oceanografía y biología marina. Evalúa las fluctuaciones térmicas en el océano para detectar posibles riesgos de floración algal o estrés en ecosistemas marinos en los sitios Monterey y San Pedro.
 
@@ -77,11 +70,6 @@ El script `misiones.py` consulta en tiempo real la API de Open-Meteo Marine para
 #### ¿Qué es un "sitio de riesgo elevado" y por qué se asocia al algal bloom?
 - **Umbral crítico:** Un sitio se clasifica con **riesgo elevado** cuando la temperatura promedio de la superficie del mar supera los **18.0 °C**.
 - **Fundamento oceanográfico:** Las temperaturas superficiales más cálidas reducen la solubilidad del oxígeno en el agua y generan condiciones de estabilidad térmica óptimas para la multiplicación exponencial de microalgas. Estas floraciones masivas pueden agotar el oxígeno disuelto (generando hipoxia) y liberar toxinas nocivas para la fauna marina, de ahí la importancia de que el sistema automatice esta alerta temprana.
-
-#### ¿Por qué es relevante el sitio de riesgo elevado?
-Un sitio se clasifica con **riesgo elevado** cuando la temperatura promedio supera el umbral de **18.0 °C**. 
-
-El aumento térmico en la superficie del agua acelerado reduce la solubilidad del oxígeno y crea condiciones óptimas para la proliferación acelerada de microalgas nocivas (*algal bloom* o mareas rojas). Estas floraciones algales pueden liberar toxinas marinas dañinas para la fauna local, alterar la cadena trófica y generar zonas hipóxicas (desprovistas de oxígeno), por lo que el monitoreo automático permite anticipar contingencias ambientales.
 
 ## Funcionalidades
 - **Extracción de datos:** Peticiones HTTP a la API pública de Open-Meteo.

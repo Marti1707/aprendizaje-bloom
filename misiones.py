@@ -5,22 +5,25 @@ import urllib.request
 def pedir_sst(lat, lon):
     url = f"https://marine-api.open-meteo.com/v1/marine?latitude={lat}&longitude={lon}&hourly=sea_surface_temperature&start_date=2026-08-01&end_date=2026-08-07&timezone=auto"
     try:
-        respuesta = urllib.request.urlopen(url)
-        contenido = respuesta.read().decode("utf-8")
-        datos = json.loads(contenido)
-        return datos.get("hourly", {}).get("sea_surface_temperature", [])
+        with urllib.request.urlopen(url, timeout=10) as respuesta:
+                  contenido = respuesta.read().decode("utf-8")
+                  datos = json.loads(contenido)
+                  return datos.get("hourly", {}).get("sea_surface_temperature", [])  
+    except urllib.error.URLError as e:
+        print(f"Error de red/conexión al consultar la API ({lat}, {lon}): {e}")
+        return []
+    except json.JSONDecodeError as e:
+        print(f"Error al procesar la respuesta JSON de la API ({lat}, {lon}): {e}")
+        return []
     except Exception as e:
-        print(f"Error al consultar la API para lat={lat}, lon={lon}: {e}")
+        print(f"Error inesperado al consultar la API ({lat}, {lon}): {e}")
         return []
 
-
-def riesgo(sst_prom, umbral):
-    if sst_prom is None:
-        return "desconocido"
+def riesgo(sst_prom, umbral=18.0):
     if sst_prom > umbral:
-        return "elevado"
+         return "elevado"
     else:
-        return "normal"
+         return "normal"
 
 
 sitios = {
