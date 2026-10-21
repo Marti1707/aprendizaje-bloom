@@ -34,7 +34,6 @@ sitios = {
 for nombre, coords in sitios.items():
     temps_raw = pedir_sst(coords["lat"], coords["lon"])
 
-    # filtrado de 544los valores nulos 
     temps = [t for t in temps_raw if t is not None]
 
     if not temps:
