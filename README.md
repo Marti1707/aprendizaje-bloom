@@ -59,7 +59,7 @@ Por ejemplo una consulta SQL como:
 SELECT site, date, temp
 FROM readings
 WHERE temp > 15;
-
+ ```
 # Semana 5 — APIs: datos del océano en vivo
 ## Dominio del Proyecto
 El proyecto se enfoca en la oceanografía y biología marina. Evalúa las fluctuaciones térmicas en el océano para detectar posibles riesgos de floración algal o estrés en ecosistemas marinos en los sitios Monterey y San Pedro.
