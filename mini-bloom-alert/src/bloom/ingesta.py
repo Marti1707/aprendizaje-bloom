@@ -19,6 +19,3 @@ def pedir_sst(lat, lon):
     except json.JSONDecodeError as e:
         print(f"Error al procesar la respuesta JSON de la API ({lat}, {lon}): {e}")
         return []
-    except Exception as e:
-        print(f"Error inesperado al consultar la API ({lat}, {lon}): {e}")
-        return []

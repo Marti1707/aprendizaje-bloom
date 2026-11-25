@@ -1,5 +1,6 @@
 from bloom.config import UMBRAL_RIESGO
 
+
 def calcular_promedio(valores):
     if not valores:
         return 0.0
@@ -7,6 +8,7 @@ def calcular_promedio(valores):
     if not validos:
         return 0.0
     return sum(validos) / len(validos)
+
 
 def riesgo(valores):
     prom = calcular_promedio(valores)
